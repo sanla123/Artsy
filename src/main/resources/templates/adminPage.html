@@ -27,8 +27,7 @@
 <div class="stats-grid">
     <div class="stat-card"><strong th:text="${totalUsers}"></strong><span>Users</span></div>
     <div class="stat-card"><strong th:text="${totalVendors}"></strong><span>Vendors</span></div>
-    <div class="stat-card"><strong th:text="${totalProducts}"></strong><span>Products</span></div>
-    <div class="stat-card"><strong th:text="${totalOrders}"></strong><span>Orders</span></div>
+    <a href="/admin/products" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;"><strong th:text="${totalProducts}"></strong><span>Products</span></a>    <div class="stat-card"><strong th:text="${totalOrders}"></strong><span>Orders</span></div>
     <div class="stat-card"><strong th:text="${totalCommissions}"></strong><span>Requests</span></div>
 </div>
 

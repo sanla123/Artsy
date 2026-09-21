@@ -40,6 +40,22 @@ public class AdminController {
         return "adminPage.html";
     }
 
+    @GetMapping("/admin/products")
+    public String adminProducts(Model m, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "redirect:/login";
+        }
+
+        var userOpt = userRepo.findByUsername(username);
+        if (userOpt.isEmpty() || !"admin".equals(userOpt.get().getRole())) {
+            return "redirect:/home";
+        }
+
+        m.addAttribute("allProducts", productRepo.findAll());
+        return "adminProductsPage.html";
+    }
+
     @PostMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable int id, Model m, HttpSession session) {
         String adminUsername = (String) session.getAttribute("username");
