@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${product.title} + ' — Artsy'"></title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/productDetails.css">
+</head>
+<body>
+
+<div th:replace="~{appNav :: appNav('shop')}"></div>
+
+<section class="pd-section">
+
+    <div class="image-area">
+        <div class="main-image">
+            <img th:if="${product.image != null}" th:src="${product.image}" alt="">
+            <span th:if="${product.image == null}">🎨</span>
+        </div>
+    </div>
+
+    <div class="pd-info">
+
+        <div class="pd-category" th:text="${product.productType}"></div>
+        <h1 th:text="${product.title}"></h1>
+
+        <div class="pd-price" th:text="'Rs. ' + ${product.price}"></div>
+
+        <p class="pd-description" th:text="${product.description}"></p>
+
+        <a class="seller" th:href="${product.vendor != null} ? @{'/seller/' + ${product.vendor.id}}">
+            <div class="seller-avatar">
+                <img th:if="${product.vendor?.user?.profileImage != null}" th:src="${product.vendor.user.profileImage}" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                <span th:if="${product.vendor?.user?.profileImage == null}">✿</span>
+            </div>
+            <div class="seller-info">
+                <small>Sold by</small>
+                <strong th:text="${product.vendor != null and !#strings.isEmpty(product.vendor.shopName)} ? ${product.vendor.shopName} : ${product.vendor?.user?.username ?: 'Independent creator'}"></strong>
+            </div>
+        </a>
+
+        <div class="quantity-row">
+            <span class="quantity-label">Quantity</span>
+            <div class="quantity">
+                <button onclick="decreaseQuantity()">−</button>
+                <span id="quantity">1</span>
+                <button onclick="increaseQuantity()">+</button>
+            </div>
+        </div>
+
+        <div class="pd-buttons">
+
+            <form th:action="@{/cart/add}" method="post" style="flex:1;">
+                <input type="hidden" name="productId" th:value="${product.id}">
+                <button type="submit" class="add-cart" th:disabled="${!product.digital and (product.stock == null or product.stock == 0)}" style="width:100%;">Add to Cart</button>
+            </form>
+
+            <form th:action="@{/cart/buy-now}" method="post" style="flex:1;">
+                <input type="hidden" name="productId" th:value="${product.id}">
+                <button type="submit" class="buy-now" th:disabled="${!product.digital and (product.stock == null or product.stock == 0)}" style="width:100%;">Buy Now</button>
+            </form>
+
+            <form th:action="@{/wishlist/toggle}" method="post" style="display:contents;">
+                <input type="hidden" name="productId" th:value="${product.id}">
+                <button type="submit" class="wishlist"
+                        th:classappend="${isWishlisted} ? ' active' : ''"
+                        th:text="${isWishlisted} ? '♥' : '♡'"></button>
+            </form>
+        </div>
+
+        <div class="pd-details">
+            <div class="detail-box">
+                <small>Product Type</small>
+                <strong th:text="${product.productType}"></strong>
+            </div>
+            <div class="detail-box" th:if="${product.digital}">
+                <small>Availability</small>
+                <strong>Digital Download</strong>
+            </div>
+
+            <div class="detail-box" th:unless="${product.digital}">
+                <small>Availability</small>
+                <strong th:text="${product.stock != null and product.stock > 0} ? 'In Stock' : 'Out of Stock'"></strong>
+            </div>
+            <div class="detail-box" th:unless="${product.digital}">
+                <small>Stock quantity</small>
+                <strong th:text="${product.stock}"></strong>
+            </div>
+
+            <div class="detail-box">
+                <small>Seller</small>
+                <strong th:text="${product.vendor != null and product.vendor.shopName != null} ? ${product.vendor.shopName} : 'Independent creator'"></strong>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="related">
+    <div class="related-inner">
+        <div class="section-heading">
+            <h2>You may also like</h2>
+            <p>More lovely things from Artsy creators.</p>
+        </div>
+
+        <div class="related-grid" th:if="${not #lists.isEmpty(relatedProducts)}">
+            <a th:each="rp : ${relatedProducts}" th:href="@{'/product/' + ${rp.id}}" class="related-card">
+                <div class="related-image">
+                    <img th:if="${rp.image != null}" th:src="${rp.image}" alt="">
+                    <span th:if="${rp.image == null}">🎨</span>
+                </div>
+                <div class="related-info">
+                    <small th:text="${rp.productType}"></small>
+                    <h3 th:text="${rp.title}"></h3>
+                    <strong th:text="'Rs. ' + ${rp.price}"></strong>
+                </div>
+            </a>
+        </div>
+
+        <p class="no-related" th:if="${#lists.isEmpty(relatedProducts)}">
+            No other products in this category yet.
+        </p>
+    </div>
+</section>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+<script>
+    let quantity = 1;
+
+    function increaseQuantity() {
+        quantity++;
+        document.getElementById("quantity").innerText = quantity;
+    }
+
+    function decreaseQuantity() {
+        if (quantity > 1) {
+            quantity--;
+            document.getElementById("quantity").innerText = quantity;
+        }
+    }
+
+
+    function buyNow() {
+        alert("Checkout isn't wired up yet — coming soon!");
+    }
+</script>
+
+</body>
+</html>

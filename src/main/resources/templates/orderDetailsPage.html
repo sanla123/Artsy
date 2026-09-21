@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details — Artsy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+
+<div th:replace="~{appNav :: appNav('profile')}"></div>
+
+<section class="checkout-header">
+    <small><a href="/orders" style="color:inherit;">← My Orders</a></small>
+    <h1>Order #<span th:text="${order.id}"></span></h1>
+</section>
+
+<div style="max-width:600px; margin:0 auto; padding:0 20px 60px;">
+
+    <div class="checkout-form-card" style="margin-bottom:20px;">
+        <p style="font-size:12px; color:#8d827e; margin-bottom:6px;">Order date</p>
+        <p style="margin-bottom:16px;" th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, h:mm a')}"></p>
+
+        <p style="font-size:12px; color:#8d827e; margin-bottom:6px;">Payment method</p>
+        <p style="margin-bottom:16px; text-transform:capitalize;" th:text="${order.paymentMethod}"></p>
+
+        <p style="font-size:12px; color:#8d827e; margin-bottom:6px;">Payment status</p>
+        <p style="margin-bottom:16px;" th:text="${order.paymentStatus == 'paid'} ? 'Payment Successful' : 'Payment Pending'"></p>
+
+        <p style="font-size:12px; color:#8d827e; margin-bottom:6px;">Order status</p>
+        <p th:if="${order.status == 'cancelled'}" style="color:#a33;">Cancelled</p>
+        <p th:unless="${order.status == 'cancelled'}"
+           th:text="${order.shippingAddress == 'Digital order — no delivery required'} ? 'Purchase confirmed' : 'Not delivered yet'"></p>
+
+        <form th:if="${order.status == 'placed' and !#lists.contains(items.![product.digital], true)}"
+              th:action="@{'/orders/' + ${order.id} + '/cancel'}" method="post" style="margin-top:16px;">
+            <button type="submit" style="font-size:12px; color:#a33; background:none; border:1px solid #a33; border-radius:20px; padding:8px 16px; cursor:pointer;">
+                Cancel Order
+            </button>
+        </form>
+
+    </div>
+
+    <div class="checkout-form-card">
+        <h2 style="margin-bottom:16px;">Items</h2>
+
+        <div th:each="item : ${items}" style="padding:14px 0; border-top:1px solid #f0e6e1;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:52px; height:52px; border-radius:8px; overflow:hidden; background:#f3dfda; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:22px;">
+                    <img th:if="${item.product.image != null}" th:src="${item.product.image}" style="width:100%; height:100%; object-fit:cover;" alt="">
+                    <span th:if="${item.product.image == null}">🎨</span>
+                </div>
+                <div style="flex:1;">
+                    <strong th:text="${item.product.title}" style="font-size:14px;"></strong><br>
+                    <small style="color:#938984;"
+                           th:text="(${item.product.digital} ? 'Digital' : 'Physical') + ' · Qty: ' + ${item.quantity} + ' · Rs. ' + ${item.product.price} + ' each'"></small>
+                </div>
+                <strong th:text="'Rs. ' + ${item.subtotal}"></strong>
+            </div>
+
+            <a th:if="${item.product.digital}" th:href="@{'/product/download/' + ${item.product.id}}"
+               class="btn-primary" style="text-decoration:none; font-size:12px; padding:8px 16px; display:inline-block; margin-top:10px;">Download Now</a>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-top:16px; padding-top:16px; border-top:1px solid #eee2dd;">
+            <strong>Total</strong>
+            <strong th:text="'Rs. ' + ${order.totalAmount}"></strong>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

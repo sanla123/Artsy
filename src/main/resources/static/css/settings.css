@@ -1,0 +1,23 @@
+.settings-card { background: white; border: 1px solid #eee2de; border-radius: 18px; padding: 28px; margin-bottom: 14px; }
+.settings-card h2 { font-family: "Playfair Display", serif; font-size: 20px; margin-bottom: 6px; }
+.settings-card .card-sub { color: #887b7b; font-size: 12px; margin-bottom: 20px; }
+
+.danger-card { border-color: #f3ded9; padding: 16px 28px; margin-bottom: 0; }
+.danger-card summary {
+    cursor: pointer;
+    list-style: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #b0736c;
+}
+.danger-card summary::-webkit-details-marker { display: none; }
+.danger-card summary::after { content: "▾"; margin-left: 6px; font-size: 11px; }
+.danger-card[open] summary::after { content: "▴"; }
+.danger-card[open] summary { margin-bottom: 12px; }
+.danger-card .card-sub { font-size: 11px; margin-bottom: 14px; }
+
+.btn-danger {
+    background: #c0392b; color: white; border: none; border-radius: 10px;
+    padding: 10px 18px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: "DM Sans", sans-serif;
+}
+.btn-danger:hover { background: #a5311f; }

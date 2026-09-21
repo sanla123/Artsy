@@ -1,0 +1,48 @@
+.seller-page .seller-header {
+    width: 90%;
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 55px 0 34px;
+    display: flex;
+    align-items: center;
+    gap: 26px;
+}
+.seller-page .seller-pfp {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: #f2e3df;
+    border: 5px solid white;
+    box-shadow: 0 5px 20px rgba(70, 50, 50, 0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    color: #c98787;
+    flex-shrink: 0;
+}
+.seller-page .seller-meta small {
+    display: block;
+    color: #a0928d;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+.seller-page .seller-meta h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 44px;
+    font-weight: 500;
+    line-height: 1.05;
+    margin: 0;
+}
+.seller-page .seller-meta p {
+    color: #887c78;
+    font-size: 13px;
+    margin: 10px 0 0;
+}
+
+@media (max-width: 700px) {
+    .seller-page .seller-header { padding-top: 40px; gap: 18px; }
+    .seller-page .seller-pfp { width: 80px; height: 80px; font-size: 32px; }
+    .seller-page .seller-meta h1 { font-size: 32px; }
+}

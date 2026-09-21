@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Product — Artsy Vendor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/vendor.css">
+</head>
+<body>
+
+<div th:replace="~{vendorNav}"></div>
+
+<div th:if="${param.error}" style="margin: 20px 7% 0; background:#fbeaea; color:#a5453f; padding:14px 20px; border-radius:12px; font-size:13px; font-weight:600;" th:text="${param.error[0]}"></div>
+
+<header class="vendor-header">
+
+    <p class="small-label"><a href="/vendor/products" style="color:inherit;">← Your products</a></p>
+    <h1>Edit <em>product</em></h1>
+</header>
+
+<div style="padding: 0 7% 60px;">
+    <div class="add-product-card" style="max-width:520px; margin:0 auto;">
+        <form th:action="@{'/vendor/products/edit/' + ${product.id}}" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="title">Product title</label>
+                <input type="text" id="title" name="title" th:value="${product.title}" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" th:value="${product.description}" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Price (Rs.)</label>
+                <input type="number" step="0.01" id="price" name="price" th:value="${product.price}" required>
+            </div>
+
+            <div class="form-group" th:unless="${product.digital}">
+                <label for="stock">Stock quantity</label>
+                <input type="number" id="stock" name="stock" th:value="${product.stock}">
+            </div>
+
+            <div class="form-group" th:if="${product.digital}">
+                <label for="digitalFile">Replace digital file (optional)</label>
+                <input type="file" id="digitalFile" name="digitalFile">
+                <small th:if="${product.digitalFileName != null}"
+                       th:text="'Current file: ' + ${product.digitalFileName}"
+                       style="display:block; margin-top:6px; color:#8d827e;"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Replace photo (optional)</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Save changes</button>
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

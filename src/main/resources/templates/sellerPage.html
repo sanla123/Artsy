@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${shopName} + ' — Artsy'">Seller — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/homeFeed.css">
+    <link rel="stylesheet" href="/css/seller.css">
+</head>
+<body>
+
+<div th:replace="~{appNav :: appNav('shop')}"></div>
+
+<main class="home-feed seller-page">
+
+    <section class="seller-header">
+        <div class="seller-pfp">
+            <img th:if="${profileImage != null}" th:src="${profileImage}" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+            <span th:if="${profileImage == null}">✿</span>
+        </div>
+        <div class="seller-meta">
+            <small>CREATOR</small>
+            <h1 th:text="${shopName}"></h1>
+            <p th:text="${#lists.size(products)} + ' on display'"></p>
+        </div>
+    </section>
+
+    <div class="feed-title">
+        <h2>On display</h2>
+        <span></span>
+    </div>
+
+    <div class="feed" th:if="${not #lists.isEmpty(products)}">
+
+        <article class="pin" th:each="product : ${products}">
+
+            <div class="pin-image">
+                <a th:href="@{'/product/' + ${product.id}}">
+                    <img th:if="${product.image != null}" th:src="${product.image}" th:alt="${product.title}">
+                    <div class="pin-noimg" th:if="${product.image == null}">🎨</div>
+                </a>
+            </div>
+
+            <a th:href="@{'/product/' + ${product.id}}" class="pin-caption">
+                <div class="pin-title" th:text="${product.title}"></div>
+                <div class="pin-sub" th:text="(${product.category != null} ? ${product.category.categoryName} : ${product.productType}) + ' · Rs. ' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 0, 'POINT')}"></div>
+            </a>
+
+        </article>
+
+    </div>
+
+    <div class="feed-empty" th:if="${#lists.isEmpty(products)}">
+        This creator hasn't put anything on display yet.
+    </div>
+
+</main>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

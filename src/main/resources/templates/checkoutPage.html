@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+
+<div th:replace="~{appNav :: appNav('cart')}"></div>
+
+<section class="checkout-header">
+    <small>Almost there</small>
+    <h1>Checkout</h1>
+</section>
+
+<p th:if="${error}" th:text="${error}"
+   style="max-width:600px; margin:0 auto 20px; padding:14px 20px; background:#fbeceb; color:#a33; border-radius:10px; text-align:center;"></p>
+
+<div class="checkout-layout">
+
+    <div class="checkout-form-card">
+        <h2>Shipping details</h2>
+
+        <form th:action="@{/checkout/place}" method="post">
+            <input type="hidden" name="orderId" th:value="${orderId}">
+
+            <div th:if="${containsDigital}" style="background:#fdf5f1; border-radius:10px; padding:14px 18px; margin-bottom:20px; font-size:13px; color:#8d6a5f;">
+                This order contains a digital product — no shipping is required, and payment must be made online.
+            </div>
+
+            <div th:unless="${containsDigital}">
+                <div class="form-group">
+                    <label for="fullName">Full name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Delivery address</label>
+                    <input type="text" id="address" name="address" placeholder="Street, city, district" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone number</label>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+            </div>
+
+            <label style="display:block; font-size:0.9rem; font-weight:600; margin-bottom:10px;">Payment method</label>
+            <div class="payment-options">
+                <label class="payment-option" th:unless="${containsDigital}">
+                    <input type="radio" name="paymentMethod" value="cod" checked>
+                    💵 Cash on Delivery
+                </label>
+                <label class="payment-option">
+                    <input type="radio" name="paymentMethod" value="online" th:checked="${containsDigital}">
+                    💳 Card (demo)
+                </label>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Place order</button>
+        </form>
+    </div>
+
+    <div class="checkout-summary">
+        <h2>Order Summary</h2>
+        <div class="checkout-line" th:each="item : ${items}">
+            <span th:text="${item.product.title} + ' × ' + ${item.quantity}"></span>
+            <span th:text="'Rs. ' + ${item.subtotal}"></span>
+        </div>
+        <div class="checkout-total">
+            <span>Total</span>
+            <span th:text="'Rs. ' + ${subtotal}"></span>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

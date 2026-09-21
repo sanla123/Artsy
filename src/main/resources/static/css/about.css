@@ -1,0 +1,175 @@
+.about-hero {
+    padding: 100px 8% 70px;
+    text-align: center;
+}
+.about-hero .small-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #a45d64;
+    margin-bottom: 18px;
+}
+.about-hero h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 56px;
+    line-height: 1.1;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.about-hero h1 em { color: #bd7076; font-style: italic; }
+.about-hero p {
+    color: #706967;
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.story-section {
+    padding: 60px 8% 110px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+.story-image {
+    height: 420px;
+    background: #f2d7d5;
+    border-radius: 24px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 120px;
+}
+.story-content h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 40px;
+    line-height: 1.15;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.story-content p {
+    color: #706967;
+    font-size: 15px;
+    line-height: 1.85;
+    margin-bottom: 16px;
+}
+
+.values-section {
+    padding: 90px 8%;
+    background: #fdf5f1;
+}
+.values-heading {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.values-heading h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 42px;
+    font-weight: 600;
+}
+.values-heading h2 em { color: #bd7076; font-style: italic; }
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+.value-card {
+    background: white;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 15px 40px rgba(75, 52, 48, 0.08);
+}
+.value-icon { font-size: 34px; margin-bottom: 16px; }
+.value-card h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.value-card p { color: #716967; font-size: 13px; line-height: 1.6; }
+
+.about-cta {
+    background: #292525;
+    color: white;
+    padding: 90px 8%;
+    text-align: center;
+}
+.about-cta h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+.about-cta h2 em { color: #e5a1a3; font-style: italic; }
+.about-cta p {
+    color: #c4bcba;
+    font-size: 15px;
+    max-width: 500px;
+    margin: 0 auto 30px;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    .story-section { grid-template-columns: 1fr; gap: 40px; }
+    .values-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+    .about-hero h1 { font-size: 38px; }
+    .story-content h2, .values-heading h2, .about-cta h2 { font-size: 30px; }
+}
+
+
+/* ================= FOOTER (same as landing page) ================= */
+.footer {
+    padding: 70px 8% 25px;
+    background: #fffaf7;
+}
+.footer-brand { max-width: 300px; }
+.footer-brand p {
+    margin-top: 15px;
+    color: #827975;
+    font-size: 13px;
+    line-height: 1.6;
+}
+.footer-links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 100px;
+    margin-top: -65px;
+}
+.footer-links div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.footer-links h4 {
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+.footer-links a {
+    color: #817875;
+    font-size: 12px;
+    transition: 0.2s ease;
+}
+.footer-links a:hover { color: #bd7076; }
+.footer-bottom {
+    border-top: 1px solid #e9dfdb;
+    margin-top: 60px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    color: #9b918d;
+    font-size: 11px;
+}
+
+@media (max-width: 900px) {
+    .footer-links { justify-content: flex-start; margin-top: 50px; }
+}
+@media (max-width: 600px) {
+    .footer { padding-left: 5%; padding-right: 5%; }
+    .footer-links { gap: 45px; }
+    .footer-bottom { flex-direction: column; gap: 10px; }
+}
+
+.about-cta .btn-primary { background: white; color: #292525; }

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+
+<div th:replace="~{appNav :: appNav('cart')}"></div>
+
+<section class="cart-page-header">
+    <small>Your creative basket</small>
+    <h1>Shopping Cart</h1>
+    <p>Your chosen supplies and handmade treasures, ready to go.</p>
+</section>
+
+<div class="ordered-banner" th:if="${justOrdered}">
+    🎉 Your order has been placed! Thank you for shopping on Artsy.
+</div>
+
+<section class="cart-section" th:if="${not #lists.isEmpty(items)}">
+
+    <div class="cart-items">
+        <div class="cart-heading">
+            <h2>Your Items</h2>
+            <span th:text="${#lists.size(items)} + (${#lists.size(items)} == 1 ? ' item' : ' items')"></span>
+        </div>
+
+        <div class="cart-item" th:each="item : ${items}">
+            <div class="item-image">
+                <img th:if="${item.product.image != null}" th:src="${item.product.image}" alt="">
+                <span th:if="${item.product.image == null}">🎨</span>
+            </div>
+
+            <div class="item-info">
+                <small th:text="${item.product.productType}"></small>
+                <h3 th:text="${item.product.title}"></h3>
+                <div class="seller-name"
+                     th:text="${item.product.vendor != null and item.product.vendor.shopName != null} ? ${item.product.vendor.shopName} : 'Independent creator'"></div>
+
+                <div class="item-bottom">
+                    <div class="cart-quantity">
+                        <form th:action="@{'/cart/update/' + ${item.id}}" method="post" style="display:inline;">
+                            <input type="hidden" name="action" value="decrease">
+                            <button type="submit">−</button>
+                        </form>
+                        <span th:text="${item.quantity}"></span>
+                        <form th:action="@{'/cart/update/' + ${item.id}}" method="post" style="display:inline;">
+                            <input type="hidden" name="action" value="increase">
+                            <button type="submit">+</button>
+                        </form>
+                    </div>
+
+                    <form th:action="@{'/cart/remove/' + ${item.id}}" method="post" style="display:inline;">
+                        <button type="submit" class="remove-button">Remove</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="item-price">
+                <strong th:text="'Rs. ' + ${item.subtotal}"></strong>
+                <small th:text="'Rs. ' + ${item.product.price} + ' each'"></small>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h2>Order Summary</h2>
+
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <strong th:text="'Rs. ' + ${subtotal}"></strong>
+        </div>
+
+        <div class="delivery-note">
+            Delivery charges may vary depending on the creator and your location in Nepal.
+        </div>
+
+        <div class="total-row">
+            <span>Total</span>
+            <strong th:text="'Rs. ' + ${subtotal}"></strong>
+        </div>
+
+        <a href="/checkout" class="checkout-button" style="display:block; text-align:center; text-decoration:none;">Proceed to Checkout →</a>
+
+        <a href="/shop" class="continue-shopping">← Continue Shopping</a>
+    </div>
+
+</section>
+
+<section class="cart-section" th:if="${#lists.isEmpty(items)}" style="grid-template-columns: 1fr;">
+    <div class="cart-items">
+        <div class="empty-cart">
+            <div class="empty-icon">🛒</div>
+            <h2>Your cart is feeling a little empty.</h2>
+            <p>Find something lovely and bring it home.</p>
+            <a href="/shop" class="shop-button">Explore the Shop</a>
+        </div>
+    </div>
+</section>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

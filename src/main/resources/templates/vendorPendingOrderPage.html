@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pending Orders — Artsy Vendor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/vendor.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div th:replace="~{vendorNav}"></div>
+
+<header class="vendor-header">
+    <p class="small-label"><a href="/vendor" style="color:inherit;">← Dashboard</a></p>
+    <h1>Pending <em>orders</em></h1>
+</header>
+
+<div style="padding: 0 7% 60px;">
+    <div class="admin-table-wrap vendor-table-wrap">
+        <table class="admin-table">
+            <thead>
+            <tr><th>Product</th><th>Qty</th><th>Subtotal</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${orderItems}">
+                <td th:text="${item.product.title}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="'Rs. ' + ${item.subtotal}"></td>
+                <td th:text="${item.status == null} ? 'pending' : ${item.status}"></td>
+                <td>
+                    <form th:if="${item.status == null or item.status != 'cancelled'}"
+                          th:action="@{'/vendor/orders/cancel/' + ${item.id}}" method="post">
+                        <button type="submit" style="font-size:10px; color:#a33; background:none; border:none; cursor:pointer;">Cancel</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p th:if="${#lists.isEmpty(orderItems)}" style="padding:20px; color:#938984;">No orders yet.</p>
+    </div>
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

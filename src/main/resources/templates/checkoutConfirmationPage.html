@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order confirmed — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+
+<div th:replace="~{appNav :: appNav('cart')}"></div>
+
+<div class="confirmation-wrap">
+    <div class="confirmation-icon">🎉</div>
+    <h1>Thank you for your order!</h1>
+    <p>Your order has been placed and the creators have been notified.</p>
+
+    <div class="confirmation-details" th:if="${order != null}">
+        <strong>Order #<span th:text="${order.id}"></span></strong><br><br>
+        <span th:text="${order.shippingAddress}"></span><br>
+        Total: Rs. <span th:text="${order.totalAmount}"></span>
+    </div>
+
+    <div class="confirmation-items" th:if="${orderItems != null}" style="max-width:480px; margin:24px auto; text-align:left;">
+        <div th:each="item : ${orderItems}"
+             style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #eee2dd;">
+            <div>
+                <strong th:text="${item.product.title}"></strong><br>
+                <small th:text="'Qty: ' + ${item.quantity} + ' · Rs. ' + ${item.subtotal}" style="color:#8d827e;"></small>
+            </div>
+            <a th:if="${item.product.digital}" th:href="@{'/product/download/' + ${item.product.id}}"
+               class="btn-primary" style="text-decoration:none; font-size:13px; padding:10px 18px;">Download Now</a>
+        </div>
+    </div>
+
+    <a href="/shop" class="btn-primary">Continue shopping</a>
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

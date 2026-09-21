@@ -1,0 +1,27 @@
+.checkout-header { width: 86%; max-width: 1000px; margin: 55px auto 30px; }
+.checkout-header small { color: #b26b72; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
+.checkout-header h1 { font-family: "Playfair Display", serif; font-size: 40px; color: #403535; margin-top: 8px; }
+
+.checkout-layout { width: 86%; max-width: 1000px; margin: 0 auto 90px; display: grid; grid-template-columns: 1fr 360px; gap: 35px; align-items: start; }
+
+.checkout-form-card { background: white; border: 1px solid #eee2de; border-radius: 18px; padding: 28px; }
+.checkout-form-card h2 { font-family: "Playfair Display", serif; font-size: 20px; margin-bottom: 20px; }
+
+.payment-options { display: flex; gap: 12px; margin-bottom: 22px; }
+.payment-option { flex: 1; border: 1px solid #ddd2ce; border-radius: 10px; padding: 14px; text-align: center; cursor: pointer; transition: 0.2s; }
+.payment-option:hover { border-color: #c47a80; background: #fff8f6; }
+.payment-option input { display: none; }
+.payment-option:has(input:checked) { border-color: #bd7076; background: #fdf0ee; }
+
+.checkout-summary { background: white; border: 1px solid #eee2de; border-radius: 18px; padding: 27px; position: sticky; top: 105px; }
+.checkout-summary h2 { font-family: "Playfair Display", serif; font-size: 22px; margin-bottom: 18px; }
+.checkout-line { display: flex; justify-content: space-between; font-size: 12px; color: #756868; padding: 8px 0; border-bottom: 1px solid #f1e8e4; }
+.checkout-total { display: flex; justify-content: space-between; margin-top: 16px; font-size: 15px; font-weight: 700; color: #453939; }
+
+.confirmation-wrap { width: 86%; max-width: 600px; margin: 90px auto; text-align: center; }
+.confirmation-icon { font-size: 60px; margin-bottom: 20px; }
+.confirmation-wrap h1 { font-family: "Playfair Display", serif; font-size: 32px; margin-bottom: 12px; }
+.confirmation-wrap p { color: #887b7b; font-size: 14px; margin-bottom: 8px; }
+.confirmation-details { background: white; border: 1px solid #eee2de; border-radius: 14px; padding: 20px; margin: 25px 0; text-align: left; font-size: 13px; color: #706967; }
+
+@media (max-width: 900px) { .checkout-layout { grid-template-columns: 1fr; } .checkout-summary { position: static; } }

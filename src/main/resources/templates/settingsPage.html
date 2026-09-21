@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/account.css">
+    <link rel="stylesheet" href="/css/settings.css">
+</head>
+<body>
+
+<div th:replace="${user?.role == 'vendor'} ? ~{vendorAccountNav :: vendorAccountNav} : ~{appNav :: appNav('settings')}"></div>
+
+<section class="account-page-header">
+    <small>Your account</small>
+    <h1>Settings</h1>
+    <p>Manage your password, shop info, and account.</p>
+</section>
+
+<div class="account-tabs">
+    <a href="/profile">Profile</a>
+    <a href="/settings" class="active">Settings</a>
+</div>
+
+<div class="account-wrap">
+
+    <div class="account-message success" th:if="${message}" th:text="${message}"></div>
+    <div class="account-message error" th:if="${error}" th:text="${error}"></div>
+
+    <div class="settings-card">
+        <h2>Change password</h2>
+        <p class="card-sub">Use a password you don't use anywhere else.</p>
+
+        <form action="/settings/password" method="post">
+            <div class="form-group">
+                <label for="currentPassword">Current password</label>
+                <input type="password" id="currentPassword" name="currentPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="newPassword">New password</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm new password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <button type="submit" class="btn-primary">Update password</button>
+        </form>
+    </div>
+
+    <div class="settings-card" th:if="${vendor != null}">
+        <h2>Your shop</h2>
+        <p class="card-sub">This shows on your product listings.</p>
+
+        <form action="/settings/vendor" method="post">
+            <div class="form-group">
+                <label for="shopName">Shop name</label>
+                <input type="text" id="shopName" name="shopName" th:value="${vendor.shopName}" placeholder="e.g. CozyLoops">
+            </div>
+            <div class="form-group">
+                <label for="contactInfo">Contact info</label>
+                <input type="text" id="contactInfo" name="contactInfo" th:value="${vendor.contactInfo}" placeholder="e.g. an email or phone number">
+            </div>
+            <button type="submit" class="btn-primary">Save shop info</button>
+        </form>
+    </div>
+
+    <div class="settings-card">
+        <h2>Log out</h2>
+        <p class="card-sub">Sign out of your Artsy account on this device.</p>
+        <a href="/logout" class="btn-secondary">Log out</a>
+    </div>
+
+    <div class="settings-card danger-card">
+        <details>
+            <summary>Delete account</summary>
+            <p class="card-sub">This is permanent. You'll need to remove any products, cart items, or orders first if you have them.</p>
+
+            <form action="/settings/delete" method="post" onsubmit="return confirm('Are you sure? This cannot be undone.');">
+                <div class="form-group">
+                    <label for="confirmPassword2">Enter your password to confirm</label>
+                    <input type="password" id="confirmPassword2" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn-danger">Delete my account</button>
+            </form>
+        </details>
+    </div>
+
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+<script src="/js/passwordToggle.js"></script>
+
+</body>
+</html>

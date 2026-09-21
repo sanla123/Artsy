@@ -1,0 +1,28 @@
+.msg-header { padding: 60px 7% 30px; }
+.msg-header p.small-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #a45d64; margin-bottom: 12px; }
+.msg-header h1 { font-family: "Playfair Display", serif; font-size: 40px; font-weight: 600; }
+.msg-header h1 em { color: #bd7076; font-style: italic; }
+
+.msg-layout { padding: 0 7% 90px; display: grid; grid-template-columns: 380px 1fr; gap: 40px; }
+
+.request-card { background: white; border: 1px solid #eee5e1; border-radius: 18px; padding: 28px; height: fit-content; position: sticky; top: 100px; }
+.request-card h3 { font-family: "Playfair Display", serif; font-size: 20px; margin-bottom: 20px; }
+
+.my-requests h2 { font-family: "Playfair Display", serif; font-size: 24px; margin-bottom: 20px; }
+.request-item { background: white; border: 1px solid #eee5e1; border-radius: 14px; padding: 18px; margin-bottom: 14px; }
+.request-item .req-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.request-item h4 { font-family: "Playfair Display", serif; font-size: 15px; }
+.request-item p { color: #706967; font-size: 12px; line-height: 1.6; }
+
+.status-badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+.status-pending { background: #fdf0d9; color: #a3720c; }
+.status-accepted { background: #e0f2e6; color: #2e7d4f; }
+.status-declined { background: #fbe1e0; color: #c0392b; }
+.status-completed { background: #e3e8fb; color: #3949ab; }
+
+.empty-requests { text-align: center; padding: 40px; color: #938984; font-size: 13px; background: #fdf5f1; border-radius: 14px; }
+
+@media (max-width: 900px) {
+    .msg-layout { grid-template-columns: 1fr; }
+    .request-card { position: static; }
+}

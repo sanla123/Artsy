@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Revenue — Artsy Vendor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/vendor.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div th:replace="~{vendorNav}"></div>
+
+<header class="vendor-header">
+    <p class="small-label"><a href="/vendor" style="color:inherit;">← Dashboard</a></p>
+    <h1>Digital Sales <em>revenue</em></h1>
+    <p style="font-size:12px; color:#8d827e; margin-top:8px;">
+        Only digital purchases count here — physical orders aren't confirmed as fulfilled yet, so they're tracked separately under Pending Orders.
+    </p>
+</header>
+
+<div style="padding: 0 7% 60px;">
+    <div class="stat-card" style="max-width:280px; margin-bottom:30px;">
+        <strong th:text="'Rs. ' + ${totalRevenue}"></strong>
+        <span>Total Revenue</span>
+    </div>
+
+    <div class="admin-table-wrap vendor-table-wrap">
+        <table class="admin-table">
+            <thead>
+            <tr><th>Product</th><th>Quantity</th><th>Revenue</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${salesItems}">
+                <td th:text="${item.product.title}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="'Rs. ' + ${item.subtotal}"></td>
+                <td th:text="${item.status == null} ? 'completed' : ${item.status}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <p th:if="${#lists.isEmpty(salesItems)}" style="padding:20px; color:#938984;">No sales yet.</p>
+    </div>
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

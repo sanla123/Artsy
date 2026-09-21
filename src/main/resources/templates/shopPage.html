@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/artsy.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+
+<div th:replace="~{appNav :: appNav('shop')}"></div>
+
+<section class="search-section">
+    <div class="search-row">
+
+        <button type="button" class="filter-toggle-btn"
+                                            onclick="document.getElementById('shopFilters').classList.toggle('filters-open')"
+                                            aria-label="Toggle filters">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 4h18l-7 8v6l-4 2v-8L3 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        </button>
+
+        <form class="search-box" action="/shop" method="get">
+            <span class="search-icon">⌕</span>
+            <input type="text" name="search" th:value="${searchTerm}" placeholder="Search for yarn, paintings, stickers, patterns...">
+        </form>
+    </div>
+</section>
+
+<main class="shop-container">
+
+    <aside class="filters" id="shopFilters">
+        <h2 class="filter-title">Filter by</h2>
+
+        <div class="filter-group">
+            <h4>Category</h4>
+            <label class="filter-option">
+                <input type="checkbox" onchange="window.location.href='/shop?category=physical'"
+                       th:checked="${selectedCategory == 'physical'}">
+                Physical Products
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" onchange="window.location.href='/shop?category=digital'"
+                       th:checked="${selectedCategory == 'digital'}">
+                Digital Products
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" onchange="window.location.href='/shop?category=supply'"
+                       th:checked="${selectedCategory == 'supply'}">
+                Craft Supplies
+            </label>
+        </div>
+
+        <form action="/shop" method="get">
+            <input type="hidden" name="category" th:value="${selectedCategory}">
+            <input type="hidden" name="search" th:value="${searchTerm}">
+
+            <div class="filter-group">
+                <h4>Price</h4>
+                <label class="filter-option">
+                    <input type="radio" name="priceRange" value="under500" th:checked="${selectedPriceRange == 'under500'}">
+                    Under Rs. 500
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="priceRange" value="500to1000" th:checked="${selectedPriceRange == '500to1000'}">
+                    Rs. 500 – Rs. 1,000
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="priceRange" value="1000plus" th:checked="${selectedPriceRange == '1000plus'}">
+                    Rs. 1,000+
+                </label>
+            </div>
+
+            <button type="submit" class="clear-button" style="background:#292525; color:white; border:none; padding:8px 16px; border-radius:6px; margin-bottom:10px;">Apply price filter</button>
+        </form>
+
+        <button class="clear-button" onclick="window.location.href='/shop'">Clear all filters</button>
+
+    </aside>
+
+    <section class="shop-content">
+
+        <div class="products" id="productGrid">
+
+            <article class="product-card" th:each="product : ${products}" th:attr="data-name=${product.title}">
+                <a th:href="@{'/product/' + ${product.id}}" class="product-card-link">
+                    <div class="product-image">
+                        <img th:if="${product.image != null}" th:src="${product.image}" style="width:100%; height:100%; object-fit:cover;" alt="">
+                        <span th:if="${product.image == null}">🎨</span>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category" th:text="${product.productType}"></p>
+                        <h3 class="product-name" th:text="${product.title}"></h3>
+                        <p class="product-description" th:text="${product.description}"></p>
+                        <div class="product-bottom">
+                            <span class="price" th:text="'Rs. ' + ${product.price}"></span>
+                            <span class="seller" th:text="${product.vendor != null and product.vendor.shopName != null} ? ${product.vendor.shopName} : ''"></span>
+                        </div>
+                    </div>
+                </a>
+                <button type="button" class="heart"
+                        th:classappend="${wishlistedIds.contains(product.id)} ? ' liked' : ''"
+                        th:text="${wishlistedIds.contains(product.id)} ? '♥' : '♡'"
+                        th:attr="data-product-id=${product.id}"
+                        onclick="toggleWishlist(this)"></button>
+            </article>
+
+            <div class="empty-shop" th:if="${#lists.isEmpty(products)}">
+                No products found here yet — try a different filter, or check back soon!
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+<script>
+    function toggleWishlist(button) {
+        const productId = button.getAttribute('data-product-id');
+        const isLiked = button.classList.contains('liked');
+
+        button.disabled = true;
+
+        const request = isLiked
+            ? fetch('/api/wishlist/product/' + productId, { method: 'DELETE' })
+            : fetch('/api/wishlist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId: parseInt(productId) })
+            });
+
+        request
+            .then(response => {
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                    return;
+                }
+                if (!response.ok) {
+                    throw new Error('Request failed');
+                }
+
+                if (isLiked) {
+                    button.classList.remove('liked');
+                    button.textContent = '♡';
+                } else {
+                    button.classList.add('liked');
+                    button.textContent = '♥';
+                }
+            })
+            .catch(() => {
+                alert('Something went wrong updating your wishlist. Please try again.');
+            })
+            .finally(() => {
+                button.disabled = false;
+            });
+    }
+</script>
+
+</body>
+</html>

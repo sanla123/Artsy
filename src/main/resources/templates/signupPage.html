@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Artsy ♡</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/artsy.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<div th:insert="~{authNav}"></div>
+
+<main class="auth-wrapper">
+
+    <section class="auth-art">
+        <div class="blob auth-blob-one"></div>
+        <div class="blob auth-blob-two"></div>
+
+        <div class="auth-art-content">
+            <p class="small-label">WELCOME TO ARTSY</p>
+            <h1>Your ideas belong <em>here.</em></h1>
+            <p>Join a little corner of the internet made for people who love creating, discovering and sharing beautiful things.</p>
+
+        </div>
+
+        <span class="auth-deco auth-star star-one">✦</span>
+        <span class="auth-deco auth-star star-two">✧</span>
+        <span class="auth-deco auth-star star-three">✦</span>
+        <span class="auth-deco auth-star star-four">✧</span>
+
+        <span class="auth-deco auth-flower flower-one">✿</span>
+        <span class="auth-deco auth-flower flower-two">❀</span>
+        <span class="auth-deco auth-flower flower-three">✿</span>
+        <span class="auth-deco auth-flower flower-four">❀</span>
+
+        <span class="auth-flower-large">✿</span>
+        <span class="auth-flower-large-two">❀</span>
+    </section>
+
+    <section class="auth-form-area">
+        <div class="auth-form">
+
+            <div class="form-heading">
+                <h2>Create your account</h2>
+                <p>Already part of Artsy? <a href="/login">Log in</a></p>
+            </div>
+
+            <form action="/signup" method="post">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Choose a username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                </div>
+
+                <p class="role-title">I want to...</p>
+                <div class="role-options">
+                    <label class="role-option">
+                        <input type="radio" name="role" value="buyer" checked>
+                        <div class="role-option-content">
+                            <span class="role-icon">🛍️</span>
+                            <div><strong>Shop</strong><small>Discover & buy</small></div>
+                        </div>
+                    </label>
+                    <label class="role-option">
+                        <input type="radio" name="role" value="vendor">
+                        <div class="role-option-content">
+                            <span class="role-icon">🎨</span>
+                            <div><strong>Create & sell</strong><small>Share my creations</small></div>
+                        </div>
+                    </label>
+                </div>
+
+                <label class="terms">
+                    <input type="checkbox" required>
+                    <span>I agree to Artsy's <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</span>
+                </label>
+
+                <button type="submit" class="auth-submit">Create my Artsy account ♡</button>
+            </form>
+
+            <p class="auth-note">✦ Your creative journey starts here.</p>
+        </div>
+    </section>
+
+</main>
+
+<script src="/js/passwordToggle.js"></script>
+
+</body>
+</html>

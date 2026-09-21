@@ -1,0 +1,219 @@
+.account-page-header {
+    width: 86%;
+    max-width: 900px;
+    margin: 55px auto 35px;
+}
+.account-page-header small {
+    color: #b26b72; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+}
+.account-page-header h1 { font-family: "Playfair Display", serif; font-size: 40px; color: #403535; margin-top: 8px; }
+.account-page-header p { color: #887b7b; font-size: 13px; margin-top: 8px; }
+
+.account-tabs {
+    width: 86%; max-width: 900px; margin: 0 auto 30px;
+    display: flex; gap: 10px;
+}
+.account-tabs a {
+    padding: 10px 20px; border-radius: 50px; font-size: 12px; font-weight: 600;
+    border: 1px solid #ddd2ce; color: #453939;
+}
+.account-tabs a.active { background: #292525; color: white; border-color: #292525; }
+
+.account-wrap { width: 86%; max-width: 900px; margin: 0 auto 90px; }
+
+.account-card {
+    background: white; border: 1px solid #eee2de; border-radius: 18px; padding: 32px; margin-bottom: 25px;
+}
+.account-card h2 { font-family: "Playfair Display", serif; font-size: 20px; color: #453939; margin-bottom: 6px; }
+.account-card .card-sub { color: #948686; font-size: 12px; margin-bottom: 22px; }
+
+.profile-avatar-row { display: flex; align-items: center; gap: 24px; margin-bottom: 26px; }
+.profile-avatar {
+    width: 100px; height: 100px; border-radius: 50%; background: #f7e1df;
+    display: flex; align-items: center; justify-content: center; font-size: 38px; color: #b26b72; flex-shrink: 0;
+    border: 4px solid white; box-shadow: 0 6px 18px rgba(90, 60, 60, 0.12);
+}
+
+.upload-photo-group { flex: 1; min-width: 200px; }
+.upload-photo-group label { display: block; font-size: 12px; font-weight: 600; color: #5c5151; margin-bottom: 8px; }
+.upload-photo-row { display: flex; align-items: center; gap: 12px; }
+.upload-photo-input { display: none; }
+.upload-btn {
+    display: inline-block; padding: 11px 20px; border-radius: 50px;
+    border: 1px solid #d9c6c2; background: white; color: #554a4a;
+    font-family: "DM Sans", sans-serif; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: 0.2s; white-space: nowrap;
+}
+.upload-btn:hover { background: #b26b72; color: white; border-color: #b26b72; }
+.upload-filename { font-size: 12px; color: #948686; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.upload-hint { color: #978989; font-size: 11px; margin-top: 8px; }
+.profile-name { font-family: "Playfair Display", serif; font-size: 22px; color: #453939; }
+.profile-role-badge {
+    display: inline-block; margin-top: 6px; padding: 4px 12px; border-radius: 50px;
+    background: #faf1ee; color: #b26b72; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.profile-verified { margin-left: 8px; padding: 4px 12px; border-radius: 50px; background: #e6f4ec; color: #2e7d4f; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.profile-unverified { margin-left: 8px; padding: 4px 12px; border-radius: 50px; background: #fbeaea; color: #a5453f; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 25px; }
+.info-item small { display: block; color: #a89b9b; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 6px; }
+.info-item strong { display: block; color: #453939; font-size: 14px; }
+
+.account-links { display: flex; flex-direction: column; gap: 2px; }
+.account-link-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 4px; border-bottom: 1px solid #f1e7e3;
+}
+.account-link-row:last-child { border-bottom: none; }
+.account-link-row span { font-size: 13px; color: #453939; }
+.account-link-row a, .account-link-row button {
+    font-size: 12px; font-weight: 600; color: #b26b72; background: none; border: none; cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .profile-avatar-row { flex-wrap: wrap; }
+}
+
+/* ================= PROFILE HERO CARD ================= */
+.profile-hero-card {
+    background: white;
+    border: 1px solid #eee2de;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(90, 60, 60, 0.04);
+    margin-bottom: 25px;
+}
+
+.profile-cover {
+    height: 190px;
+    background: linear-gradient(135deg, #f2a99b, #ec9a8d 60%, #eaa79c);
+    position: relative;
+    overflow: hidden;
+}
+.cover-decoration {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 22px;
+}
+.cover-decoration.circle {
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    color: transparent;
+}
+.decoration-one { left: 10%; top: 40px; font-size: 18px; }
+.decoration-two { left: 26%; top: 30px; width: 80px; height: 80px; }
+.decoration-three { left: 46%; top: 65px; font-size: 26px; }
+.decoration-four { left: 51%; top: 100px; width: 18px; height: 18px; }
+.decoration-five { right: 22%; top: 30px; font-size: 34px; }
+.decoration-six { right: 4%; top: 55px; width: 130px; height: 130px; }
+
+.profile-hero-main { padding: 0 40px 32px; position: relative; }
+
+.profile-picture-wrapper { position: absolute; top: -85px; left: 40px; }
+.profile-picture {
+    width: 165px; height: 165px; border-radius: 50%;
+    background: #f2e3df; border: 6px solid white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px; box-shadow: 0 8px 25px rgba(70, 50, 50, 0.14);
+}
+
+.edit-profile-btn {
+    position: absolute; right: 40px; top: 24px;
+    padding: 11px 20px; border: 1px solid #d9c6c2; border-radius: 8px;
+    background: white; color: #554a4a; font-family: "DM Sans", sans-serif;
+    font-size: 13px; font-weight: 600; text-decoration: none; transition: 0.2s;
+}
+.edit-profile-btn:hover { background: #b26b72; color: white; border-color: #b26b72; }
+
+.profile-hero-info { padding-top: 92px; }
+.profile-hero-name { font-family: "Playfair Display", serif; font-size: 30px; color: #403535; margin-bottom: 4px; }
+.profile-hero-badges { margin-bottom: 14px; }
+.profile-hero-bio { max-width: 600px; color: #716565; font-size: 14px; line-height: 1.7; margin-bottom: 18px; }
+.profile-hero-meta { display: flex; flex-wrap: wrap; gap: 18px; color: #857878; font-size: 12px; }
+
+.profile-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 0;
+    border-top: 1px solid #eee5e2;
+    margin-top: 28px;
+    padding-top: 22px;
+    max-width: 400px;
+}
+.hero-stat { padding-left: 22px; border-left: 1px solid #eee5e2; }
+.hero-stat:first-child { padding-left: 0; border-left: none; }
+.hero-stat-number { font-family: "Playfair Display", serif; font-size: 24px; color: #403535; }
+.hero-stat-label { font-size: 11px; color: #8b7d7d; margin-top: 3px; }
+
+@media (max-width: 600px) {
+    .profile-hero-main { padding-left: 24px; padding-right: 24px; }
+    .profile-picture-wrapper { left: 24px; }
+    .edit-profile-btn { right: 24px; top: 18px; padding: 8px 14px; font-size: 11px; }
+    .profile-cover { height: 120px; }
+    .profile-picture { width: 120px; height: 120px; }
+    .profile-picture-wrapper { top: -60px; }
+    .profile-hero-info { padding-top: 55px; }
+}
+
+/* ================= ACCOUNT FORMS ================= */
+.account-form .form-group { margin-bottom: 18px; }
+.account-form label {
+    display: block; font-size: 12px; font-weight: 600; color: #5c5151; margin-bottom: 7px;
+}
+.account-form input {
+    width: 100%;
+    border: 1px solid #ddd2ce;
+    background: #fff;
+    border-radius: 10px;
+    padding: 13px 15px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 13px;
+    color: #292525;
+    outline: none;
+    transition: 0.25s ease;
+}
+.account-form input:focus {
+    border-color: #c47a80;
+    box-shadow: 0 0 0 3px rgba(196, 122, 128, 0.1);
+}
+
+.account-submit {
+    border: none; border-radius: 50px; padding: 13px 28px;
+    background: #292525; color: white; font-family: "DM Sans", sans-serif;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s;
+}
+.account-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(40, 35, 35, 0.15); }
+
+.account-cancel-link {
+    display: inline-block; margin-left: 14px; font-size: 13px; color: #857878; font-weight: 600;
+}
+
+.account-message { padding: 13px 18px; border-radius: 10px; font-size: 12px; font-weight: 600; margin-bottom: 20px; }
+.account-message.success { background: #e6f4ec; color: #2e7d4f; }
+.account-message.error { background: #fbeaea; color: #a5453f; }
+
+.edit-picture-preview {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: #f2e3df; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; margin-bottom: 10px;
+}
+.edit-picture-preview img { width: 100%; height: 100%; object-fit: cover; }
+.remove-picture-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #857878;
+}
+.remove-picture-check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border-radius: 4px;
+    flex-shrink: 0;
+}

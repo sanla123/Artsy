@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>App Nav</title></head>
+<body>
+
+<nav th:fragment="appNav(activePage)" class="navbar">
+
+    <a href="/home" class="logo"><img src="/images/artsy-logo.png" alt="Artsy" style="height:40px; width:auto; display:block;"></a>
+
+    <div class="nav-links" id="appNavLinks">
+        <a href="/home" th:classappend="${activePage == 'home'} ? ' active' : ''">Home</a>
+        <a href="/shop" th:classappend="${activePage == 'shop'} ? ' active' : ''">Shop</a>
+        <a href="/wishlist" th:classappend="${activePage == 'wishlist'} ? ' active' : ''">Wishlist</a>
+        <a href="/cart" th:classappend="${activePage == 'cart'} ? ' active' : ''">Cart</a>
+        <a href="/messages" th:classappend="${activePage == 'messages'} ? ' active' : ''">Messages</a>
+        <a href="/settings" class="settings-mobile-link" title="Settings">✿</a>
+    </div>
+
+    <button class="mobile-menu-btn" onclick="document.getElementById('appNavLinks').classList.toggle('mobile-open')">☰</button>
+
+    <div class="nav-right app-nav-right">
+        <a href="/settings" class="profile" title="Settings">✿</a>
+    </div>
+
+</nav>
+
+</body>
+</html>

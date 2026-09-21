@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Products — Artsy Vendor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/vendor.css">
+</head>
+<body>
+
+<div th:replace="~{vendorNav}"></div>
+
+<header class="vendor-header">
+    <p class="small-label"><a href="/vendor" style="color:inherit;">← Dashboard</a></p>
+    <h1>Your <em>products</em></h1>
+</header>
+
+<div style="padding: 0 7% 60px;">
+    <div class="vendor-products-grid">
+        <div class="vendor-product-card" th:each="product : ${myProducts}">
+
+            <img th:if="${product.image != null}" th:src="${product.image}" class="vendor-product-img" alt="">
+            <div th:if="${product.image == null}" class="vendor-product-icon">🎨</div>
+
+            <div class="vendor-product-info">
+                <h4 th:text="${product.title}"></h4>
+                <p th:if="${product.digital}" th:text="'Rs. ' + ${product.price} + ' · Digital Download'"></p>
+                <p th:unless="${product.digital}" th:text="'Rs. ' + ${product.price} + ' · Stock: ' + ${product.stock}"></p>
+            </div>
+
+            <div style="display:flex; gap:8px;">
+                <a th:href="@{'/vendor/products/edit/' + ${product.id}}" class="edit-btn" title="Edit product">✎</a>
+                <form th:action="@{'/vendor/products/delete/' + ${product.id}}" method="post" class="delete-form">
+                    <button type="submit" class="delete-btn" title="Remove product">✕</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="empty-vendor-products" th:if="${#lists.isEmpty(myProducts)}">
+            You haven't added any products yet — go back to your dashboard to add one!
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

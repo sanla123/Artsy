@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/account.css">
+</head>
+<body>
+
+<div th:replace="${user?.role == 'vendor'} ? ~{vendorAccountNav :: vendorAccountNav} : ~{appNav :: appNav('profile')}"></div>
+<section class="account-page-header">
+    <small>Your account</small>
+    <h1>Edit Profile</h1>
+    <p>Update your picture, username and email address.</p>
+</section>
+
+<div class="account-wrap">
+
+    <div class="account-message error" th:if="${error}" th:text="${error}"></div>
+
+    <div class="account-card">
+        <h2>Your details</h2>
+        <p class="card-sub">Changing your username updates it everywhere on Artsy, including your login.</p>
+
+        <form class="account-form" th:action="@{/profile/edit}" method="post" enctype="multipart/form-data">
+
+            <div class="profile-avatar-row">
+                <div class="profile-avatar">
+                    <img id="avatarPreview" th:if="${user.profileImage != null}" th:src="${user.profileImage}" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                    <span id="avatarPlaceholder" th:if="${user.profileImage == null}">✿</span>
+                </div>
+                <div class="upload-photo-group">
+                    <label for="profileImage">Profile picture</label>
+                    <div class="upload-photo-row">
+                        <label for="profileImage" class="upload-btn">Choose Photo</label>
+                        <span class="upload-filename" id="fileNameDisplay">No file chosen</span>
+                    </div>
+                    <input class="upload-photo-input" type="file" id="profileImage" name="profileImage" accept="image/png,image/jpeg,image/gif"
+                           onchange="document.getElementById('fileNameDisplay').textContent = this.files[0] ? this.files[0].name : 'No file chosen';">
+                    <p class="upload-hint">JPG, PNG or GIF, up to 1MB.</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" th:value="${user.username}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" th:value="${user.email}" required>
+            </div>
+
+            <button type="submit" class="account-submit">Save Changes</button>
+            <a href="/profile" class="account-cancel-link">Cancel</a>
+        </form>
+    </div>
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

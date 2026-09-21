@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/artsy.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<div th:insert="~{authNav}"></div>
+
+<main class="auth-wrapper">
+
+    <section class="auth-art">
+        <div class="blob auth-blob-one"></div>
+        <div class="blob auth-blob-two"></div>
+
+        <div class="auth-art-content">
+            <p class="small-label">WELCOME BACK</p>
+            <h1>Good things are waiting <em>for you.</em></h1>
+            <p>Your favorite makers, creative finds, and little things that make you smile are just a login away.</p>
+
+        </div>
+
+        <span class="auth-deco auth-star star-one">✦</span>
+        <span class="auth-deco auth-star star-two">✧</span>
+        <span class="auth-deco auth-star star-three">✦</span>
+        <span class="auth-deco auth-star star-four">✧</span>
+
+        <span class="auth-deco auth-flower flower-one">✿</span>
+        <span class="auth-deco auth-flower flower-two">❀</span>
+        <span class="auth-deco auth-flower flower-three">✿</span>
+        <span class="auth-deco auth-flower flower-four">❀</span>
+
+        <span class="auth-flower-large">✿</span>
+        <span class="auth-flower-large-two">❀</span>
+    </section>
+
+    <section class="auth-form-area">
+        <div class="auth-form">
+
+            <div class="form-heading">
+                <h2>Welcome back ♡</h2>
+                <p>Don't have an Artsy account? <a href="/signup">Create one</a></p>
+            </div>
+
+            <p class="auth-message" style="color:#3a8a5c" th:if="${message}" th:text="${message}"></p>
+            <p class="auth-message" style="color:#c0392b" th:if="${error}" th:text="${error}"></p>
+
+            <form action="login" method="post">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <div style="text-align:right; margin-top:8px;">
+                        <a href="/forgot-password" class="forgot-password">Forgot password?</a>
+                    </div>
+                </div>
+
+                <label class="remember">
+                    <input type="checkbox" name="remember">
+                    Remember me
+                </label>
+
+                <button type="submit" class="auth-submit">Log in to Artsy ♡</button>
+            </form>
+
+
+            <p class="auth-note">✦ Made for creators, makers & curious souls.</p>
+        </div>
+    </section>
+
+</main>
+
+<script src="/js/passwordToggle.js"></script>
+
+</body>
+</html>

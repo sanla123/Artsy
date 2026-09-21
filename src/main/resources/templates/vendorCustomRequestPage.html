@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Custom Requests — Artsy Vendor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/vendor.css">
+    <link rel="stylesheet" href="/css/messages.css">
+</head>
+<body>
+
+<div th:replace="~{vendorNav}"></div>
+
+<header class="vendor-header">
+    <p class="small-label"><a href="/vendor" style="color:inherit;">← Dashboard</a></p>
+    <h1>Custom <em>requests</em></h1>
+</header>
+
+<div style="padding: 0 7% 60px;">
+
+    <div th:each="r : ${commissionRequests}" class="request-item">
+        <div class="req-top">
+            <h4 th:text="${r.customer.username}"></h4>
+            <span class="status-badge" th:classappend="'status-' + ${r.status}" th:text="${r.status}"></span>
+        </div>
+        <p th:text="${r.description}"></p>
+        <p th:if="${r.budget > 0}" th:text="'Budget: Rs. ' + ${r.budget}"></p>
+        <p th:if="${r.createdAt != null}" style="font-size:12px; color:#a89c96;"
+           th:text="${#temporals.format(r.createdAt, 'dd MMM yyyy, h:mm a')}"></p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; align-items:center;">            <a th:href="@{'/vendor/custom-requests/' + ${r.id}}" class="btn-primary" style="text-decoration:none; font-size:13px; padding:8px 16px;">View / Reply</a>
+            <form th:if="${r.status == 'pending'}" th:action="@{'/vendor/commissions/' + ${r.id} + '/approve'}" method="post" style="display:contents;">
+                <button type="submit" class="btn-primary" style="font-size:13px; padding:8px 16px;">Approve</button>
+            </form>
+            <form th:if="${r.status == 'pending'}" th:action="@{'/vendor/commissions/' + ${r.id} + '/reject'}" method="post" style="display:contents;">
+                <button type="submit" style="font-size:13px; color:#a33; background:none; border:1px solid #a33; border-radius:20px; padding:8px 16px; cursor:pointer;">Reject</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="empty-requests" th:if="${#lists.isEmpty(commissionRequests)}">
+        No custom order requests yet.
+    </div>
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

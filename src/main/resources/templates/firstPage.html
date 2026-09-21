@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artsy — Made by Imagination</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/artsy.css">
+    <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+<div th:insert="~{publicNav}"></div>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">✦ A marketplace for creative souls</div>
+        <h1>Made with <span>imagination.</span></h1>
+        <p class="hero-text">Discover beautiful handmade creations, creative supplies, and digital treasures made by artists and makers just like you.</p>
+        <div class="hero-buttons">
+            <a href="/login" class="btn-primary">Log in to explore</a>
+            <a href="/signup" class="btn-secondary">Start creating</a>
+        </div>
+        <div class="hero-note"><span class="tiny-heart">♡</span> Shop small · Support creators · Find something special</div>
+    </div>
+    <div class="hero-art">
+        <div class="blob blob-one"></div>
+        <div class="blob blob-two"></div>
+        <div class="main-art">
+            <div class="art-image crochet"><img src="/images/landingPage-image.png" alt="Handmade yarn" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div class="art-info">
+                <div><strong>Handmade treasures</strong><small>Made with love</small></div>
+                <span class="heart">♡</span>
+            </div>
+        </div>
+        <div class="floating-card card-top">
+            <span class="floating-icon">✿</span>
+            <div><strong>Creative finds</strong><small>1,000+ possibilities</small></div>
+        </div>
+        <div class="floating-card card-bottom">
+            <span class="star">✦</span>
+            <div><strong>Made by people</strong><small>Support independent artists</small></div>
+        </div>
+        <div class="doodle doodle-one">✧</div>
+        <div class="doodle doodle-two">♡</div>
+        <div class="doodle doodle-three">✦</div>
+    </div>
+</section>
+
+<section class="trust-bar">
+    <div><span>♡</span> Independent creators</div>
+    <div><span>✦</span> Unique handmade goods</div>
+    <div><span>✿</span> Creative supplies</div>
+    <div><span>☼</span> Digital creations</div>
+</section>
+
+<section class="categories-section" id="categories">
+    <div class="section-heading">
+        <div>
+            <p class="section-label">EXPLORE ARTSY</p>
+            <h2>Something for <em>every kind</em> of maker.</h2>
+        </div>
+        <a href="/shop" class="view-all">View everything →</a>
+    </div>
+    <div class="category-grid">
+        <a href="/shop?category=physical" class="category-card physical">
+            <div class="category-icon">🎨</div>
+            <div><h3>Physical Products</h3><p>Handmade pieces made to brighten your world.</p></div>
+            <span class="category-arrow">↗</span>
+        </a>
+        <a href="/shop?category=digital" class="category-card digital">
+            <div class="category-icon">✨</div>
+            <div><h3>Digital Products</h3><p>Patterns, templates, art and creative downloads.</p></div>
+            <span class="category-arrow">↗</span>
+        </a>
+        <a href="/shop?category=supply" class="category-card supplies">            <div class="category-icon">🧵</div>
+            <div><h3>Craft Supplies</h3><p>Everything you need to bring your next idea to life.</p></div>
+            <span class="category-arrow">↗</span>
+        </a>
+    </div>
+</section>
+
+<section class="discover-section" id="discover">
+    <div class="discover-image">
+        <div class="paper-decoration"></div>
+        <div class="mini-art art-one">🪡</div>
+        <div class="mini-art art-two">🌸</div>
+        <div class="mini-art art-three">🧶</div>
+        <div class="discover-circle">made<br>with<br><span>♡</span></div>
+    </div>
+    <div class="discover-content">
+        <p class="section-label">WHY ARTSY?</p>
+        <h2>Where creativity finds its people.</h2>
+        <p>Artsy brings creators, makers and curious shoppers together in one cozy marketplace. Find something you love, support the person who made it, or share your own creativity with the world.</p>
+        <div class="features">
+            <div class="feature"><span>01</span><div><h3>Discover</h3><p>Find unique creations you won't see everywhere.</p></div></div>
+            <div class="feature"><span>02</span><div><h3>Create</h3><p>Turn your ideas into something people can love.</p></div></div>
+            <div class="feature"><span>03</span><div><h3>Connect</h3><p>Meet artists and makers behind the things you buy.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="about-section" id="about">
+    <div class="about-inner">
+        <span class="about-symbol">✿</span>
+        <p class="section-label">A LITTLE ABOUT US</p>
+        <h2>Creativity is better when it's <em>shared.</em></h2>
+        <p>Artsy was created to give independent artists and makers a place to showcase what they love making while giving shoppers a place to discover something truly special.</p>
+        <a href="/signup" class="btn-dark">Become part of Artsy →</a>
+    </div>
+</section>
+
+<div th:insert="~{publicFooter}"></div>
+
+</body>
+</html>

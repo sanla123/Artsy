@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/vendor.css">
+</head>
+<body>
+
+<div th:replace="~{vendorNav}"></div>
+
+<div th:if="${param.error}" style="margin: 20px 7% 0; background:#fbeaea; color:#a5453f; padding:14px 20px; border-radius:12px; font-size:13px; font-weight:600;" th:text="${param.error[0]}"></div>
+
+<header class="vendor-header">
+
+    <p class="small-label">VENDOR DASHBOARD</p>
+    <h1 th:if="${isVendor}">Your <em>shop</em>, your rules.</h1>
+    <h1 th:unless="${isVendor}">Become a <em>maker</em> on Artsy.</h1>
+</header>
+
+<div class="not-vendor-box" th:unless="${isVendor}">
+    <h2>You're not set up as a vendor yet</h2>
+    <p>You signed up as a customer, so there's no vendor shop linked to your account yet.</p>
+</div>
+
+<div th:if="${isVendor}" style="padding: 0 7% 60px;">
+
+    <div class="vendor-nav-grid">
+        <a href="/vendor/revenue" class="vendor-nav-card">
+            <strong th:text="'Rs. ' + ${totalRevenue}"></strong>
+            <span>Total Revenue</span>
+        </a>
+        <a href="/vendor/pending-orders" class="vendor-nav-card">
+            <strong th:text="${pendingCount}"></strong>
+            <span>Pending Orders</span>
+        </a>
+        <a href="/vendor/products" class="vendor-nav-card">
+            <strong th:text="${productCount}"></strong>
+            <span>Products Listed</span>
+        </a>
+        <a href="/vendor/custom-requests" class="vendor-nav-card">
+            <strong th:text="${commissionCount}"></strong>
+            <span>Custom Requests</span>
+        </a>
+    </div>
+
+    <div class="add-product-card" style="max-width:520px; margin:0 auto;">
+        <h3>Add a new product</h3>
+
+        <form action="/vendor/products/add" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Product title</label>
+                <input type="text" id="title" name="title" placeholder="e.g. Pastel Cotton Yarn Set" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" placeholder="Short description" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Price (Rs.)</label>
+                <input type="number" step="0.01" id="price" name="price" placeholder="850" required>
+            </div>
+            <div class="form-group">
+                <label for="productType">Category</label>
+                <select id="productType" name="productType" required onchange="toggleDigitalFields(this.value)">
+                    <option value="physical">Physical Product</option>
+                    <option value="digital">Digital Product</option>
+                    <option value="supply">Craft Supply</option>
+                </select>
+            </div>
+            <div class="form-group" id="stockGroup">
+                <label for="stock">Stock quantity</label>
+                <input type="number" id="stock" name="stock" placeholder="10">
+            </div>
+            <div class="form-group" id="digitalFileGroup" style="display:none;">
+                <label for="digitalFile">Digital file (PDF, ZIP, image, etc.)</label>
+                <input type="file" id="digitalFile" name="digitalFile">
+            </div>
+            <div class="form-group">
+                <label for="image">Product photo</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Add product</button>
+        </form>
+
+        <script>
+            function toggleDigitalFields(type) {
+                const stockGroup = document.getElementById('stockGroup');
+                const digitalGroup = document.getElementById('digitalFileGroup');
+                if (type === 'digital') {
+                    stockGroup.style.display = 'none';
+                    digitalGroup.style.display = 'block';
+                    document.getElementById('stock').value = '';
+                } else {
+                    stockGroup.style.display = 'block';
+                    digitalGroup.style.display = 'none';
+                }
+            }
+        </script>
+
+    </div>
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+/* ============================================================
+   HOME PAGE FEED — everything is scoped under .home-feed
+   Only home.html should link this file.
+   ============================================================ */
+
+.home-feed {
+    color: #3d3434;
+    font-family: "DM Sans", sans-serif;
+    line-height: normal;
+}
+
+/* ---------- INTRO ---------- */
+.home-feed .top {
+    width: 90%;
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 55px 0 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+.home-feed .top h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 54px;
+    font-weight: 500;
+    line-height: 1;
+    margin: 0;
+}
+.home-feed .top h1 em { color: #c98787; }
+.home-feed .top p {
+    color: #887c78;
+    font-size: 13px;
+    line-height: 1.7;
+    max-width: 390px;
+    margin: 12px 0 0;
+}
+.home-feed .top-right { text-align: right; }
+.home-feed .top-right small {
+    display: block;
+    color: #a0928d;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+.home-feed .discover-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #3d3434;
+    color: white;
+    padding: 11px 15px;
+    border-radius: 24px;
+    font-size: 10px;
+}
+
+/* ---------- FILTER CHIPS ---------- */
+.home-feed .chips {
+    width: 90%;
+    max-width: 1450px;
+    margin: auto;
+    padding: 10px 0 34px;
+    display: flex;
+    gap: 10px;
+    overflow: auto;
+}
+.home-feed .chip {
+    white-space: nowrap;
+    border: 1px solid #e5d9d3;
+    border-radius: 22px;
+    padding: 10px 17px;
+    font-size: 10px;
+    background: white;
+    transition: .2s;
+}
+.home-feed .chip:first-child { background: #3d3434; color: white; border-color: #3d3434; }
+.home-feed .chip:hover { transform: translateY(-2px); }
+
+/* ---------- MINI TITLE ---------- */
+.home-feed .feed-title {
+    width: 90%;
+    max-width: 1450px;
+    margin: 10px auto 20px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+.home-feed .feed-title span { height: 1px; background: #e5d9d3; flex: 1; }
+.home-feed .feed-title h2 {
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    font-size: 24px;
+    margin: 0;
+}
+
+/* ---------- PRODUCT GRID ---------- */
+.home-feed .feed {
+    width: 90%;
+    max-width: 1450px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 28px 18px;
+    padding-bottom: 65px;
+}
+.home-feed .pin {
+    position: relative;
+    cursor: pointer;
+}
+.home-feed .pin-image {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #eee2dc;
+}
+.home-feed .pin-image a { display: block; }
+.home-feed .pin-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: .45s;
+}
+.home-feed .pin-noimg {
+    aspect-ratio: 4 / 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+}
+.home-feed .pin:hover .pin-image img { transform: scale(1.025); }
+.home-feed .save {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: #fff;
+    color: #3d3434;
+    border: 0;
+    border-radius: 22px;
+    padding: 10px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: .2s;
+    box-shadow: 0 4px 15px #00000018;
+}
+.home-feed .pin:hover .save { opacity: 1; transform: translateY(0); }
+.home-feed .pin-caption { display: block; padding: 10px 3px 0; }
+.home-feed .pin-title { font-size: 12px; font-weight: 600; }
+.home-feed .pin-sub { font-size: 10px; color: #938680; margin-top: 4px; }
+.home-feed .pin-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 8px;
+    color: #998c87;
+    font-size: 9px;
+}
+.home-feed .dot {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    background: #ead7d1;
+}
+.home-feed .feed-empty {
+    width: 90%;
+    max-width: 1450px;
+    margin: 0 auto 65px;
+    text-align: center;
+    padding: 50px;
+    color: #938984;
+    font-size: 13px;
+    background: #fdf5f1;
+    border-radius: 16px;
+}
+
+/* ---------- CUSTOM REQUEST STRIP ---------- */
+.home-feed .creator-strip {
+    width: 90%;
+    max-width: 1450px;
+    margin: 10px auto 70px;
+    background: #f2e6e0;
+    border-radius: 22px;
+    padding: 34px 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+.home-feed .creator-strip h2 {
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    font-size: 32px;
+    margin: 5px 0;
+}
+.home-feed .creator-strip h2 em { color: #c98787; }
+.home-feed .creator-strip p { font-size: 11px; color: #81736f; margin: 0; }
+.home-feed .creator-btn {
+    background: #3d3434;
+    color: white;
+    border-radius: 22px;
+    padding: 12px 18px;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1200px) {
+    .home-feed .feed { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 900px) {
+    .home-feed .feed { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 700px) {
+    .home-feed .top { display: block; padding-top: 40px; }
+    .home-feed .top h1 { font-size: 42px; }
+/*    .home-feed .top-right { text-align: left; margin-top: 20px; }  */
+    .home-feed .feed { grid-template-columns: repeat(2, 1fr); gap: 18px 12px; }
+    .home-feed .creator-strip { display: block; padding: 28px; }
+    .home-feed .creator-btn { display: inline-block; margin-top: 20px; }
+}

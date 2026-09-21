@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders — Artsy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+
+<div th:replace="~{appNav :: appNav('profile')}"></div>
+
+<section class="checkout-header">
+    <small>Your account</small>
+    <h1>My Orders</h1>
+</section>
+
+<div style="max-width:720px; margin:0 auto; padding:0 20px 60px;">
+
+    <div th:each="order : ${orders}" class="checkout-form-card" style="margin-bottom:20px;">
+
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+            <div>
+                <strong>Order #<span th:text="${order.id}"></span></strong><br>
+                <small style="color:#8d827e;" th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, h:mm a')}"></small>
+            </div>
+
+            <span th:if="${order.status == 'cancelled'}"
+                  style="display:inline-block; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:600; background:#fbeceb; color:#a33;">Cancelled</span>
+            <span th:unless="${order.status == 'cancelled'}"
+                  style="display:inline-block; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:600; background:#fdf5f1; color:#a45e66;"
+                  th:text="${order.paymentStatus == 'paid'} ? 'Payment Successful' : 'Payment Pending'"></span>
+
+        </div>
+
+        <div th:each="item : ${itemsByOrder.get(order.id)}"
+             style="display:flex; align-items:center; gap:12px; padding:8px 0; border-top:1px solid #f0e6e1;">
+            <div style="width:44px; height:44px; border-radius:8px; overflow:hidden; background:#f3dfda; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:20px;">
+                <img th:if="${item.product.image != null}" th:src="${item.product.image}" style="width:100%; height:100%; object-fit:cover;" alt="">
+                <span th:if="${item.product.image == null}">🎨</span>
+            </div>
+            <div style="flex:1;">
+                <div th:text="${item.product.title}" style="font-size:13px; font-weight:600;"></div>
+                <small style="color:#938984;"
+                       th:text="'Qty: ' + ${item.quantity} + ' · ' + (${item.product.digital} ? 'Digital' : 'Physical') + ' · Rs. ' + ${item.subtotal}"></small>
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:14px; border-top:1px solid #f0e6e1;">
+            <div>
+                <small style="color:#8d827e;">Total: </small>
+                <strong th:text="'Rs. ' + ${order.totalAmount}"></strong>
+            </div>
+            <a th:href="@{'/orders/' + ${order.id}}" class="btn-primary" style="text-decoration:none; font-size:12px; padding:9px 18px;">View Order</a>
+        </div>
+
+    </div>
+
+    <div th:if="${#lists.isEmpty(orders)}" style="text-align:center; padding:60px 20px; color:#938984;">
+        You haven't placed any orders yet.
+    </div>
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

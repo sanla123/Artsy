@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/account.css">
+</head>
+<body>
+
+<div th:replace="${user?.role == 'vendor'} ? ~{vendorAccountNav :: vendorAccountNav} : ~{appNav :: appNav('profile')}"></div>
+<section class="account-page-header">
+    <small>Your account</small>
+    <h1>My Profile</h1>
+    <p>A quick look at your Artsy account.</p>
+</section>
+
+<div class="account-tabs">
+    <a href="/profile" class="active">Profile</a>
+    <a href="/settings">Settings</a>
+</div>
+
+<div class="account-wrap">
+
+    <div class="account-message success" th:if="${message}" th:text="${message}"></div>
+
+    <div class="profile-hero-card">
+
+        <div class="profile-cover">
+            <div class="cover-decoration decoration-one">✦</div>
+            <div class="cover-decoration circle decoration-two"></div>
+            <div class="cover-decoration decoration-three">✦</div>
+            <div class="cover-decoration circle decoration-four"></div>
+            <div class="cover-decoration decoration-five">✿</div>
+            <div class="cover-decoration circle decoration-six"></div>
+        </div>
+
+        <div class="profile-hero-main">
+            <div class="profile-picture-wrapper">
+                <div class="profile-picture">
+                    <img th:if="${user.profileImage != null}" th:src="${user.profileImage}" alt=""
+                         style="width:100%; height:100%; border-radius:50%; object-fit:cover;">
+                    <span th:if="${user.profileImage == null}">✿</span>
+                </div>
+            </div>
+
+            <a href="/profile/edit" class="edit-profile-btn">Edit Profile</a>
+
+            <div class="profile-hero-info">
+                <h1 class="profile-hero-name" th:text="${user.username}"></h1>
+
+                <div class="profile-hero-badges">
+                    <span class="profile-role-badge" th:text="${user.role}"></span>
+                    <span class="profile-verified" th:if="${user.verified}">Verified</span>
+                    <span class="profile-unverified" th:unless="${user.verified}">Not verified</span>
+                </div>
+
+                <p class="profile-hero-bio">Welcome to your creative corner on Artsy.</p>
+
+                <div class="profile-hero-meta">
+                    <span th:text="${user.email}"></span>
+                </div>
+
+                <div class="profile-hero-stats" th:if="${user.role != 'vendor'}">                    <a href="/orders" class="hero-stat" style="text-decoration:none; color:inherit;">
+                        <div class="hero-stat-number" th:text="${placedOrderCount}"></div>
+                        <div class="hero-stat-label">Orders</div>
+                    </a>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number" th:text="${wishlistCount}"></div>
+                        <div class="hero-stat-label">Wishlist Items</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="account-card">
+        <h2>Manage your account</h2>
+        <p class="card-sub">Update your password and other account settings.</p>
+        <div class="account-links">
+            <div class="account-link-row">
+                <span>Account & password settings</span>
+                <a href="/settings">Go to Settings →</a>
+            </div>
+
+            <div class="account-link-row">
+                <span>Log out of Artsy</span>
+                <a href="/logout">Log out →</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

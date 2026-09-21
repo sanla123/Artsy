@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/vendor.css">
+    <link rel="stylesheet" href="/css/messages.css">
+</head>
+<body>
+
+<div th:replace="~{appNav :: appNav('messages')}"></div>
+
+<div th:if="${param.error}" style="margin: 20px 7% 0; background:#fbeaea; color:#a5453f; padding:14px 20px; border-radius:12px; font-size:13px; font-weight:600;" th:text="${param.error[0]}"></div>
+
+<header class="msg-header">
+
+    <p class="small-label">CUSTOM REQUESTS</p>
+    <h1>Ask a creator to <em>make it for you.</em></h1>
+</header>
+
+<div class="msg-layout">
+
+    <div class="request-card">
+        <h3>Request a custom product</h3>
+
+        <form action="/messages/request" method="post">
+
+            <div class="form-group">
+                <label for="vendorId">Choose a creator</label>
+                <select id="vendorId" name="vendorId" required>
+                    <option th:each="v : ${vendors}" th:value="${v.id}"
+                            th:text="${v.shopName != null} ? ${v.shopName} : ${v.user.username}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Describe what you want</label>
+                <input type="text" id="description" name="description" placeholder="e.g. A custom crochet cat plushie in orange" required>
+            </div>
+
+            <div class="form-group">
+                <label for="budget">Your budget (Rs., optional)</label>
+                <input type="number" step="0.01" id="budget" name="budget" placeholder="1500">
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Send request</button>
+        </form>
+    </div>
+
+    <div class="my-requests">
+        <h2>Your requests</h2>
+
+        <div th:each="r : ${myRequests}" class="request-item">
+
+            <div th:if="${editId == null or editId != r.id or r.status != 'pending'}">                <div class="req-top">
+                    <h4 th:text="${r.vendor.shopName != null} ? ${r.vendor.shopName} : ${r.vendor.user.username}"></h4>
+                    <span class="status-badge" th:classappend="'status-' + ${r.status}" th:text="${r.status}"></span>
+                </div>
+                <p th:text="${r.description}"></p>
+                <p th:if="${r.budget > 0}" th:text="'Budget: Rs. ' + ${r.budget}"></p>
+                <div style="display:flex; gap:10px; margin-top:8px; align-items:center;">
+                    <a th:href="@{'/messages/' + ${r.id}}" style="font-size:11px; color:#1a1a1a; font-weight:600; cursor:pointer;">View conversation →</a>
+                    <a th:if="${r.status == 'pending'}" th:href="@{'/messages'(edit=${r.id})}" style="font-size:11px; color:#b16870; cursor:pointer;">Edit</a>
+                    <form th:if="${r.status == 'pending'}" th:action="@{'/messages/delete/' + ${r.id}}" method="post" style="display:contents;"
+                          onsubmit="return confirm('Cancel this request? Your conversation with the creator will be deleted too.');">
+                        <button type="submit" style="font-size:11px; color:#a33; background:none; border:none; cursor:pointer; padding:0;">Cancel request</button>
+                    </form>
+
+                </div>
+            </div>
+
+            <form th:if="${editId != null and editId == r.id and r.status == 'pending'}" th:action="@{'/messages/edit/' + ${r.id}}" method="post">                <div class="form-group">
+                    <label>Choose a creator</label>
+                    <select name="vendorId" required>
+                        <option th:each="v : ${vendors}" th:value="${v.id}"
+                                th:selected="${v.id == r.vendor.id}"
+                                th:text="${v.shopName != null} ? ${v.shopName} : ${v.user.username}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Describe what you want</label>
+                    <input type="text" name="description" th:value="${r.description}" required>
+                </div>
+                <div class="form-group">
+                    <label>Your budget (Rs., optional)</label>
+                    <input type="number" step="0.01" name="budget" th:value="${r.budget}">
+                </div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button type="submit" class="btn-primary">Save changes</button>
+                    <a href="/messages" style="font-size:11px; color:#8d827e;">Cancel</a>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="empty-requests" th:if="${#lists.isEmpty(myRequests)}">
+            You haven't requested any custom pieces yet — use the form to ask a creator.
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div th:replace="~{adminNav}"></div>
+
+<header class="admin-header">
+    <p class="small-label">ADMIN DASHBOARD</p>
+    <h1>Artsy at a glance</h1>
+    <p class="admin-message success" th:if="${message}" th:text="${message}"></p>
+    <p class="admin-message error" th:if="${error}" th:text="${error}"></p>
+</header>
+
+<div class="stats-grid">
+    <div class="stat-card"><strong th:text="${totalUsers}"></strong><span>Users</span></div>
+    <div class="stat-card"><strong th:text="${totalVendors}"></strong><span>Vendors</span></div>
+    <div class="stat-card"><strong th:text="${totalProducts}"></strong><span>Products</span></div>
+    <div class="stat-card"><strong th:text="${totalOrders}"></strong><span>Orders</span></div>
+    <div class="stat-card"><strong th:text="${totalCommissions}"></strong><span>Requests</span></div>
+</div>
+
+<div class="admin-table-wrap">
+    <table class="admin-table">
+        <thead>
+        <tr><th>Username</th><th>Email</th><th>Password</th><th>Role</th><th>Verified</th><th></th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${allUsers}">
+            <td th:text="${u.username}"></td>
+            <td th:text="${u.email}"></td>
+            <td th:text="${u.password}" style="font-family: monospace; font-size: 10px;"></td>
+            <td th:text="${u.role}"></td>
+            <td th:text="${u.verified} ? 'Yes' : 'No'"></td>
+            <td>
+                <form th:if="${u.role != 'admin'}" th:action="@{'/admin/users/delete/' + ${u.id}}" method="post"
+                      onsubmit="return confirm('Delete user &quot;' + '[[${u.username}]]' + '&quot;? This cannot be undone.');">
+                    <button type="submit" class="admin-delete-btn">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>

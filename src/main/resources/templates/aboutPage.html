@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — Artsy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/artsy.css">
+    <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+
+<div th:insert="~{publicNav}"></div>
+
+<section class="about-hero">
+    <p class="small-label">A LITTLE ABOUT US</p>
+    <h1>Made for people who <em>love making things.</em></h1>
+    <p>Artsy started as a simple idea: creative people deserve a home that's actually built for them — not a general marketplace they have to squeeze into.</p>
+</section>
+
+<section class="story-section">
+    <div class="story-image">🧵</div>
+    <div class="story-content">
+        <h2>Our story</h2>
+        <p>Many creative people — painters, crocheters, jewelry makers, journal decorators — struggle to find specialized supplies in one place, or a real audience for their handmade work.</p>
+        <p>Artsy was built to solve that: a single, organized marketplace for creative supplies, handmade goods, and digital creative assets, so creators and buyers don't have to piece things together across scattered shops and social media.</p>
+    </div>
+</section>
+
+<section class="values-section">
+    <div class="values-heading">
+        <h2>What we <em>stand for</em></h2>
+    </div>
+    <div class="values-grid">
+        <div class="value-card">
+            <div class="value-icon">🤝</div>
+            <h3>Support independent creators</h3>
+            <p>Every purchase goes directly to a real person making real things — not a warehouse.</p>
+        </div>
+        <div class="value-card">
+            <div class="value-icon">✿</div>
+            <h3>Celebrate handmade</h3>
+            <p>We believe things made with care are worth seeking out, not settling for mass production.</p>
+        </div>
+        <div class="value-card">
+            <div class="value-icon">🌍</div>
+            <h3>Build real community</h3>
+            <p>Artsy connects creators and shoppers directly — not just a transaction, a relationship.</p>
+        </div>
+    </div>
+</section>
+
+<section class="about-cta">
+    <h2>Ready to <em>join us?</em></h2>
+    <p>Whether you're here to shop, or here to share what you make — there's a place for you at Artsy.</p>
+    <a href="/signup" class="btn-primary">Join Artsy ♡</a>
+</section>
+
+<div th:insert="~{publicFooter}"></div>
+
+</body>
+</html>

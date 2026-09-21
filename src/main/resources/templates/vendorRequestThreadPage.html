@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Conversation — Artsy Vendor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/artsy.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/vendor.css">
+    <link rel="stylesheet" href="/css/messages.css">
+</head>
+<body>
+
+<div th:replace="~{vendorNav}"></div>
+
+<header class="vendor-header">
+    <p class="small-label"><a href="/vendor/custom-requests" style="color:inherit;">← Custom requests</a></p>
+    <h1>Chat with <em th:text="${commission.customer.username}"></em></h1>
+</header>
+
+<div style="padding: 0 7% 60px; max-width:600px; margin:0 auto;">
+
+    <div class="request-item" style="margin-bottom:20px;">
+        <div class="req-top">
+            <h4>The request</h4>
+            <span class="status-badge" th:classappend="'status-' + ${commission.status}" th:text="${commission.status}"></span>
+        </div>
+        <p th:text="${commission.description}"></p>
+        <p th:if="${commission.budget > 0}" th:text="'Budget: Rs. ' + ${commission.budget}"></p>
+
+        <div th:if="${commission.status == 'pending'}" style="display:flex; gap:10px; margin-top:10px;">
+            <form th:action="@{'/vendor/commissions/' + ${commission.id} + '/approve'}" method="post" style="display:contents;">
+                <button type="submit" class="btn-primary" style="font-size:13px; padding:8px 16px;">Approve</button>
+            </form>
+            <form th:action="@{'/vendor/commissions/' + ${commission.id} + '/reject'}" method="post" style="display:contents;">
+                <button type="submit" style="font-size:13px; color:#a33; background:none; border:1px solid #a33; border-radius:20px; padding:8px 16px; cursor:pointer;">Reject</button>
+            </form>
+        </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
+        <div th:each="msg : ${messages}"
+             th:style="${msg.sender.username == vendor.user.username} ? 'align-self:flex-end; background:#1a1a1a; color:#fff; padding:10px 16px; border-radius:16px 16px 4px 16px; max-width:75%;' : 'align-self:flex-start; background:#f2ece8; color:#1a1a1a; padding:10px 16px; border-radius:16px 16px 16px 4px; max-width:75%;'">
+            <img th:if="${msg.image != null}" th:src="${msg.image}" alt="Photo"
+                 style="display:block; max-width:100%; max-height:360px; border-radius:12px;">
+            <div th:if="${msg.content != null and !#strings.isEmpty(msg.content)}" th:text="${msg.content}"
+                 th:style="${msg.image != null} ? 'margin-top:8px;' : ''"></div>
+            <small th:if="${msg.sentAt != null}" th:text="${#temporals.format(msg.sentAt, 'h:mm a')}"
+                   style="display:block; opacity:0.6; font-size:10px; margin-top:4px;"></small>
+        </div>
+
+        <p th:if="${#lists.isEmpty(messages)}" style="color:#8d827e; text-align:center;">No messages yet — say hello!</p>
+    </div>
+
+    <p th:if="${param.error != null}" th:text="${param.error[0]}" style="color:#a33; font-size:13px; margin-bottom:10px;"></p>
+
+    <form th:action="@{'/vendor/custom-requests/' + ${commission.id} + '/message'}" method="post" enctype="multipart/form-data" style="display:flex; gap:10px; align-items:center;">
+        <label for="chatImage" id="chatImageLabel" title="Attach a photo"
+               style="display:flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; margin:0; border:1px solid #e5dcd6; border-radius:50%; background:#fff; font-size:18px; cursor:pointer;">📎</label>
+        <input type="file" id="chatImage" name="image" accept="image/*" style="display:none;"
+               onchange="document.getElementById('chatImageLabel').textContent = this.files.length ? '✓' : '📎'">
+        <input type="text" name="content" placeholder="Type a reply..." style="flex:1; padding:12px 16px; border-radius:20px; border:1px solid #e5dcd6;">
+        <button type="submit" class="btn-primary" style="border-radius:20px;">Send</button>
+    </form>
+    <p style="font-size:11px; color:#978989; margin-top:8px;">Photos up to 2MB.</p>
+
+</div>
+
+<div th:replace="~{appFooter :: appFooter}"></div>
+
+</body>
+</html>
